@@ -10,9 +10,27 @@
 @Desc    :   None
 '''
 
+from py2neo import Graph,Node,Relationship,Subgraph
+
+
+### 数据交互层,封装orm
 # 聊天数据解析成可录入的信息，增量更新：用户偏好，商品。
+
 class DataHelper(object):
-    def __init__(self):
+    def __init__(self,host,username,password):
+        self.cursor = Graph(host=host,username=username,password=password)
+    
+    def truncate(self):
+        self.cursor.run('match (n) detach delete n;')
+
+    def match_to_node(self,entity,condition):
+        return self.cursor.run("MATCH (p:{entity} {{{where}}}) RETURN p limit 1".format(entity=entity,where=condition)).evaluate()
+        
+    def update_or_insert(self):
         pass
-    def select(self):
+
+    def update(self):
+        pass
+
+    def delete(self):
         pass

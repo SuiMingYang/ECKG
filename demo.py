@@ -1,6 +1,6 @@
 from py2neo import Graph,Node,Relationship,Subgraph
 from Config.base import conf,variable
-graph = Graph('http://localhost:7474',username='neo4j',password='smy769')
+graph = Graph(host=conf.get('neo4j','server'),username=conf.get('neo4j','user'),password=conf.get('neo4j','pwd'))
 import inspect
 
 graph.run('match (n) detach delete n;')
